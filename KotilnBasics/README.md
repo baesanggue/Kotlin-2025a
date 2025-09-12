@@ -10,7 +10,7 @@
 ## Git and settings
 
 
-##Pratice Files
+## Pratice Files
 
 * `MainActivity.kt` : variables, functions
 
