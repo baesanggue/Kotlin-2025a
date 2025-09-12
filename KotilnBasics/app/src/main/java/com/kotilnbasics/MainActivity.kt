@@ -28,6 +28,7 @@ class MainActivity : ComponentActivity() {
             }
         }
         week02Variables()
+        week02Functions()
     }
 }
 
@@ -61,6 +62,34 @@ private fun week02Variables(){
     var nickname: String? = null // 얘는 널 허용되는 스트링이라 컴파일시 오류 안나옴
     nickname = "mirae"
     println("Nickname: $nickname, NicknameLength:  ${nickname?.length}")
+}
+
+private fun week02Functions(){
+//    println("Week 02 : Functions")
+//
+//    fun greet(name: String) ="Hello, $name!"
+//    println(greet("Android developer"))
+
+    println("===Kotlin Function ===")
+    //기본형태
+    fun greet(name: String): String{
+        return "Hello, $name"
+    }
+    // 단일표현식
+    fun add(a: Int, b: Int) = a+b
+
+    //기본 매개변수 주기
+    fun introduce(name:String, age: Int = 19){
+        println("My name is $name and I'm $age years old")
+    }
+
+
+    println(greet("Kotlin"))
+    println("Sum = ${add(5,-71)}")
+    introduce("kim",7)
+    introduce("sam")
+
+
 }
 
 @Composable
