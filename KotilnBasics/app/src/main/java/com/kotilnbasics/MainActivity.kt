@@ -1,6 +1,7 @@
 package com.kotilnbasics
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -30,7 +31,7 @@ class MainActivity : ComponentActivity() {
         //week02Variables()
         //week02Functions()
         week03Classes()
-        week03Collections()
+        //week03Collections()
     }
 }
 
@@ -94,30 +95,63 @@ private fun week02Functions(){
 
 }
 private fun week03Classes(){
-    println("== Kotilin Classes ==")
+    //println("== Kotilin Classes ==")
 
-    class Student{
-        var name: String =""
-        var age: Int = 0
-        
-        fun introduce(){
-            println("HI, I'm $name and I'm $age years old")
+    //tag = 태깅 정보 이걸로 로그창에서 태그로 검색 가능
+    Log.d("KotlinWeek03", "== Kotlin Classes ==")
+    class Person(val name: String, var age: Int){
+        fun introduce() {
+            Log.d("KotlinWeek03", "안녕하세요, $name ($age 세) 입니다")
+        }
+        // 후위 연산도 가능
+        fun birthday(){
+            age++
+            Log.d("KotlinWeek03", "$name 의 생일 이제 $age 세...")
         }
     }
+    val person1 = Person("홍길동", 27)
+    person1.introduce()
+    person1.birthday()
 
-    val student = Student()
-    student.name = "Mirae"
-    student.age = 21
-    student.introduce()
+    // 원래 생성자는 constructer 표기 해야하는데 생략가능 굳이 표현하자면
+    class Animal(var species: String){
+        var weight: Double = 0.0
+        constructor(species: String, weight: Double) : this(species){
+            this.weight = weight
+            Log.d("KotlinWeek03", "$species 의 무게 : $weight kg")
+        }
 
-    //클래스 만들고 생성자 사용
-    data class Person(val name: String, val age: Int)
+        fun makeSound(){
+            Log.d("KotlinWeek03", "$species 가 소리를 냅니다.")
+        }
+    }
+    val puppy = Animal("웰시코기", 10.5)
+    puppy.makeSound()
 
-    val person1 = Person("Kim", age = 23)
-    val person2 = Person("Kim", age = 23)
 
-    println("Person1: $person1")
-    println("Equal? : ${person1 == person2}")
+//
+//    class Student{
+//        var name: String =""
+//        var age: Int = 0
+//
+//        fun introduce(){
+//            println("HI, I'm $name and I'm $age years old")
+//        }
+//    }
+//
+//    val student = Student()
+//    student.name = "Mirae"
+//    student.age = 21
+//    student.introduce()
+//
+//    //클래스 만들고 생성자 사용
+//    data class Person(val name: String, val age: Int)
+//
+//    val person1 = Person("Kim", age = 23)
+//    val person2 = Person("Kim", age = 23)
+//
+//    println("Person1: $person1")
+//    println("Equal? : ${person1 == person2}")
 }
 private fun week03Collections(){
     println("=== Kotlin Collections ===")
