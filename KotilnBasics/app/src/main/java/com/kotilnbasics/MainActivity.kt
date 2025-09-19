@@ -27,9 +27,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        week02Variables()
-        week02Functions()
+        //week02Variables()
+        //week02Functions()
         week03Classes()
+        week03Collections()
     }
 }
 
@@ -108,6 +109,48 @@ private fun week03Classes(){
     student.name = "Mirae"
     student.age = 21
     student.introduce()
+
+    //클래스 만들고 생성자 사용
+    data class Person(val name: String, val age: Int)
+
+    val person1 = Person("Kim", age = 23)
+    val person2 = Person("Kim", age = 23)
+
+    println("Person1: $person1")
+    println("Equal? : ${person1 == person2}")
+}
+private fun week03Collections(){
+    println("=== Kotlin Collections ===")
+
+    
+    // 값을 바꿀 수 없는 리스트
+    val fruits = listOf("apple", "banana", "orange")
+    println("Fruits: $fruits")
+
+    //fruits.add() 값을 바꿀 수 없어서 오류
+
+    // 값을 바꿀수 있는 리스트
+    val mutableFruits = mutableListOf("kiwi", "watermelon")
+    println("MutableFruits : $mutableFruits")
+    mutableFruits.add("banana")
+    println("MutableFruits : $mutableFruits")
+
+    //map (딕셔너리 형태)
+    val scores = mapOf("Kim" to 100, "Park" to 97, "Lee" to 99) //왼쪽이 키 오른쪽이 밸류
+    println("Scores : $scores")
+
+    //범위기반 반복문
+
+    for(fruit in fruits){
+        println(" I like $fruit")
+    }
+    // 뮤타블이든 아니든 상관 없다..
+    for(fruit in mutableFruits){
+        println(" I like $fruit")
+    }
+
+    //foreach 는 자바랑 다르게 중 괄호로 열기
+    scores.forEach{(name, score) -> println("$name scored $score")}
 }
 
 @Composable
