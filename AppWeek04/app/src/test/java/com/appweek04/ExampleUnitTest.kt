@@ -1,4 +1,4 @@
-package com.kotilnbasics
+package com.appweek04
 
 import org.junit.Test
 

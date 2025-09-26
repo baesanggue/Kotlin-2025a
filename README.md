@@ -2,7 +2,3 @@ This remote repository manages code and materials related to the Mobile Programm
 
 
 
-\## License
-
-This project is licensed under the MIT License. See \[LICENSE.md](LICENSE.md) for details.
-
