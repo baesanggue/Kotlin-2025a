@@ -12,7 +12,8 @@ class GreetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge() 자동생성 제거
-        setContentView(R.layout.activity_greeting) //뷰 연동 코드
+        setContentView(R.layout.activity_greet) //뷰 연동 코드
+
 
         val editTextName = findViewById<EditText>(R.id.editTextName) // 입력상자랑 변수 바인딩. 불변으로 선언
         val buttonGreet = findViewById<Button>(R.id.buttonGreet)
