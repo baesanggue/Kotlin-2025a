@@ -29,6 +29,9 @@
             android:name=".ColorActivity">
         </activity>
 
+        <activity
+            android:name=".CounterActivity">
+        </activity>
     </application>
 
 </manifest>
