@@ -1,144 +1,169 @@
 # Mobile Programming, Fall 2025 Semester
 
-This repository contains the source code and documentation for Week 05 of the Kotlin learning project, developed in Android Studio using XML Views. The focus is on ListView and data handling with simple interactive Android apps.
+This repository contains the source code and documentation for Week 06 of the Kotlin learning project, developed in Android Studio using XML Views. The focus is on Git branching strategies and feature integration with expandable ListView applications.
 
 ## Project Overview
-- **Path**: `D:\kotlin-2025a\AppWeek05`
+- **Path**: `D:\kotlin-2025a\AppWeek06`
 - **Environment**: Android Studio, Kotlin, XML Views (Empty Views Activity)
-- **Purpose**: Practice ListView, ArrayAdapter, and data manipulation with simple apps: Student List, Shopping Cart, and Task Manager.
-- **Structure**: Single Activity (`MainActivity.kt`) with ListView integration and data management.
+- **Purpose**: Practice Git feature branching, merging, and conflict resolution while building expandable apps with multiple functionalities.
+- **Structure**: Single Activity (`MainActivity.kt`) with mode switching between Student List, Shopping Cart, and Task Manager.
 
-## Week 05: ListView and Data Handling
+## Week 06: Git Branching and Feature Integration
 
 ### Objectives
-- Understand ListView implementation and ArrayAdapter usage in Android.
-- Apply data management techniques with ArrayList and user interaction.
-- Build interactive apps with dynamic list manipulation: Add, Remove, Update operations.
+- Master Git feature branching workflow and merge conflict resolution.
+- Implement multiple app functionalities within a single codebase.
+- Apply advanced ListView techniques with different data types and adapters.
+- Build modular, extensible application architecture.
 
 ### Content
-- **Project**: `AppWeek05` (XML Views with ListView).
-- **Main Branch**: Student List App (`MainActivity.kt`, `activity_main.xml`).
-    - Add student names via EditText, display in ListView.
-    - Remove items by long-clicking on ListView items.
-    - Logcat tag: `"KotlinWeek05App"`.
-- **Branches**:
-    - `week05/shopping-cart`: Add shopping cart app (Add/Remove items, display total count).
-    - `week05/task-manager`: Add simple task manager (Add tasks, mark as completed, remove).
-- **Workflow**:
-    1. Start from `main` (Student List App).
-    2. Create feature branches: `git checkout -b week05/shopping-cart`.
-    3. Develop and commit changes to the project folder (e.g., `git add AppWeek05/`).
-    4. Merge to `main`: `git merge week05/shopping-cart` (resolve conflicts if needed).
-- **AndroidManifest.xml**: Updated to launch `MainActivity` as the main entry point.
+- **Project**: `AppWeek06` (XML Views with Multiple Features).
+- **Main Branch**: Student List App (base functionality from Week 05).
+- **Feature Branches**:
+    - `week06/shopping-cart`: Shopping cart with items, quantities, and total price calculation.
+    - `week06/task-manager`: Task manager with priority levels, completion status, and due dates.
+    - `week06/integration`: Merged branch with all three features and mode switching.
 
-### Key Components
-- **ListView**: Display dynamic list of items
-- **ArrayAdapter**: Manage data binding between ArrayList and ListView
-- **EditText**: Input field for adding new items
-- **Button**: Add/Clear/Reset operations
-- **ArrayList<String>**: Data storage for list items
-- **OnItemLongClickListener**: Handle item removal
+### Git Workflow Strategy
+```bash
+# 1. Start from main (Student List)
+git checkout main
+git pull origin main
+
+# 2. Create and work on shopping cart feature
+git checkout -b week06/shopping-cart
+# Develop shopping cart functionality
+git add AppWeek06/
+git commit -m "week06 : Shopping Cart App v0.1"
+
+# 3. Create and work on task manager feature
+git checkout main
+git checkout -b week06/task-manager
+# Develop task manager functionality
+git add AppWeek06/
+git commit -m "week06 : Task Manager App v0.1"
+
+# 4. Integration branch
+git checkout main
+git checkout -b week06/integration
+git merge week06/shopping-cart
+git merge week06/task-manager
+# Resolve conflicts and test integration
+git add AppWeek06/
+git commit -m "week 06: Integrate all features with mode switching"
+
+# 5. Merge back to main
+git checkout main
+git merge week06/integration
+```
+
+### Key Features
+
+#### 1. Student List Manager (Base - Main Branch)
+- Add/remove student names
+- Display total count
+- Long press to delete
+- Initial sample data
+
+#### 2. Shopping Cart (Branch: week06/shopping-cart)
+- Add items with quantities
+- Price calculation per item
+- Total cart value display
+- Remove items
+- Clear entire cart
+- Item details with quantity adjustment
+
+#### 3. Task Manager (Branch: week06/task-manager)
+- Add tasks with priority levels (High, Medium, Low)
+- Mark tasks as completed/incomplete
+- Due date setting
+- Filter by priority
+- Sort by completion status
+- Task statistics display
+
+#### 4. Mode Switching (Integration Branch)
+- Radio buttons or Spinner for mode selection
+- Dynamic UI updates based on selected mode
+- Shared ListView with different adapters
+- Persistent mode selection
+
+### Enhanced Components
+- **Multiple Data Models**: Student, CartItem, Task classes
+- **Custom Adapters**: Different adapters for each mode
+- **Mode Management**: Enum-based mode switching
+- **Data Persistence**: SharedPreferences for mode and data
+- **Advanced UI**: Mode-specific layouts and controls
+- **Validation**: Enhanced input validation for each mode
 
 ### How to Run
-1. Open the project in Android Studio (`D:\kotlin-2025a\AppWeek05`).
+1. Open the project in Android Studio (`D:\kotlin-2025a\AppWeek06`).
 2. Build and run on an emulator or device (API 24+ recommended).
-3. Open Logcat and filter by tag `"KotlinWeek05App"` to view outputs (e.g., item additions, removals, list operations).
+3. Use mode selector to switch between Student List, Shopping Cart, and Task Manager.
+4. Open Logcat and filter by tag `"KotlinWeek06App"` to view detailed operations.
 
-### Exercises
-- Add Toast messages for successful operations (add/remove items).
-- Implement item editing functionality (click to edit existing items).
-- Add data validation (prevent empty items from being added).
-- Extend the task manager: Add priority levels (High, Medium, Low) and sorting.
-- Implement data persistence using SharedPreferences.
+### Sample Data Structures
 
-## Sample Code Structure
-
-### MainActivity.kt (Main Branch - Student List)
+#### Student Data Model
 ```kotlin
-class MainActivity : AppCompatActivity() {
-    private lateinit var studentList: ArrayList<String>
-    private lateinit var adapter: ArrayAdapter<String>
-    private lateinit var listView: ListView
-    private lateinit var editTextStudent: EditText
-    private lateinit var buttonAdd: Button
-    
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        
-        // Initialize components
-        setupViews()
-        setupListView()
-        setupListeners()
-    }
+data class Student(
+    val name: String,
+    val id: String = UUID.randomUUID().toString(),
+    val addedDate: Date = Date()
+)
+```
+
+#### Shopping Cart Item Model
+```kotlin
+data class CartItem(
+    val name: String,
+    var quantity: Int = 1,
+    val price: Double,
+    val id: String = UUID.randomUUID().toString(),
+    val addedDate: Date = Date()
+) {
+    fun getTotalPrice(): Double = quantity * price
 }
 ```
 
-### activity_main.xml Layout
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
-    
-    <EditText
-        android:id="@+id/editTextStudent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter student name" />
-    
-    <Button
-        android:id="@+id/buttonAdd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Student" />
-    
-    <ListView
-        android:id="@+id/listViewStudents"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-        
-</LinearLayout>
+#### Task Model
+```kotlin
+data class Task(
+    val title: String,
+    val description: String = "",
+    var isCompleted: Boolean = false,
+    val priority: TaskPriority,
+    val dueDate: Date? = null,
+    val id: String = UUID.randomUUID().toString(),
+    val createdDate: Date = Date()
+)
+
+enum class TaskPriority(val displayName: String, val color: Int) {
+    HIGH("High", Color.RED),
+    MEDIUM("Medium", Color.BLUE),
+    LOW("Low", Color.GREEN)
+}
 ```
 
-## Setup Instructions
-1. **Create New Project** in Android Studio:
-    - Choose "Empty Views Activity"
-    - Project name: `AppWeek05`
-    - Package name: `com.appweek05`
-    - Save location: `D:\kotlin-2025a\AppWeek05`
+### App Modes Enum
+```kotlin
+enum class AppMode(val displayName: String) {
+    STUDENT_LIST("Student List"),
+    SHOPPING_CART("Shopping Cart"),
+    TASK_MANAGER("Task Manager")
+}
+```
 
-2. **Initial Setup**:
-   ```bash
-   cd D:\kotlin-2025a
-   git add AppWeek05/
-   git commit -m "week 05: ListView Apps initialization"
-   ```
+### Learning Outcomes
+By completing Week 06, students will:
+- Master Git feature branching and merge conflict resolution
+- Understand modular application architecture
+- Implement multiple data models and custom adapters
+- Practice advanced ListView techniques and mode switching
+- Apply software engineering principles for maintainable code
 
-3. Ensure Android SDK and emulator are configured.
-4. Sync project with Gradle files.
-
-## Git Workflow
-- Continue using the existing Git repository in `D:\kotlin-2025a`.
-- To commit Week 05 changes:
-  ```bash
-  git add AppWeek05/
-  git commit -m "week 05: Student List App v0.1"
-  git push origin main
-  ```
-- Create feature branches:
-  ```bash
-  git checkout -b week05/shopping-cart
-  git checkout -b week05/task-manager
-  ```
-
-## Learning Outcomes
-By completing Week 05, students will:
-- Master ListView implementation and data binding
-- Understand ArrayAdapter usage for dynamic lists
-- Practice user input validation and data manipulation
-- Learn item selection and removal techniques
-- Apply Git branching strategies for feature development
+### Conflict Resolution Examples
+Common merge conflicts and solutions:
+1. **Layout conflicts**: Different branches modifying same XML elements
+2. **Method conflicts**: Same method name with different implementations
+3. **Import conflicts**: Different import statements for same functionality
+4. **Resource conflicts**: String resources, colors, dimensions
