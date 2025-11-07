@@ -35,6 +35,8 @@ android {
     }
 
     //viewbinding 활성화
+    // 장점 1) 타입 안정성, 2) Null 안정성 , 3) findViewByID 함수 반복되는거 제거 , 4) 성능 향상 (빌드 이후에)
+    // 단점 1) 빌드 시간 증가, 2) 바인딩 객체 생성 필요, 3) 학습 곡선 필요, (배우는데 알아야 할 것이 많음)
     buildFeatures{
         viewBinding = true
     }
