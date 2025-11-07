@@ -34,6 +34,11 @@ android {
         jvmTarget = "11"
     }
 
+    //viewbinding 활성화
+    buildFeatures{
+        viewBinding = true
+    }
+
 
 }
 
@@ -44,6 +49,10 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    //recyclerview
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
