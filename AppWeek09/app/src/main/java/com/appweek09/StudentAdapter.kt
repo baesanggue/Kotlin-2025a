@@ -1,0 +1,57 @@
+package com.appweek09
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.appweek09.data.Student
+import com.appweek09.databinding.ItemStudentBinding
+
+class StudentAdapter(
+    //필드
+    private val studentList : List<Student>,
+    // 메소드 역할 필드
+    private val onItemClick : (Student, Int) -> Unit,
+    private val onItemLongClick: (Int) -> Unit
+
+    // 리사이클 뷰 상속
+    ) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
+
+    inner class StudentViewHolder(private val binding: ItemStudentBinding) : //이너클래스
+        RecyclerView.ViewHolder(binding.root) { // 리사이클 뷰의 뷰홀더 상속
+        fun bind(student: Student) {
+            binding.apply {
+                textViewName.text = student.name
+                textViewDept.text = student.department
+                textViewGrade.text = student.grade
+                textViewEmail.text = student.email
+
+                root.setOnClickListener{
+                    onItemClick(student, adapterPosition)
+                }
+                root.setOnLongClickListener{
+                    onItemLongClick(adapterPosition)
+                    true
+                }
+            }
+
+
+        }
+    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
+        val binding = ItemStudentBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return StudentViewHolder(binding)
+    }
+
+
+    override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
+        holder.bind(studentList[position])
+
+    }
+
+
+    override fun getItemCount(): Int = studentList.size
+}
