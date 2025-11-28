@@ -18,8 +18,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupListeners()
+        if (savedInstanceState != null){
+            count = savedInstanceState.getInt("count", 0)
+        }
 
+        setupListeners()
+        updateCountDisplay()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("count", count)
     }
 
     private fun setupListeners() {
