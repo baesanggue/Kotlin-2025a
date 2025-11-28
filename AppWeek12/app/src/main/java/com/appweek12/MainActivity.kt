@@ -7,13 +7,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.appweek12.databinding.ActivityMainBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
-    // private var count = 0;
-    
     private val viewModel: CounterViewModel by viewModels()
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,62 +23,48 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-        // 아래 코드는 ViewModel이 자동으로 처리
-//        if (savedInstanceState != null){
-//            count = savedInstanceState.getInt("count", 0)
-//        }
 
-        setupObservers() // 얘가 관측하는 함수
+        setupObservers() // 얘가 관측하는 함수 / flow로 오면서 관찰하는 함수 변경
         setupListeners()
-//      updateCountDisplay()
+
     }
 
     private fun setupObservers() {
-        viewModel.count.observe(this){
-            count -> binding.textViewCount.text = count.toString()
-            when{
-                count > 0 -> binding.textViewCount.setTextColor(Color.GREEN)
-                count < 0 -> binding.textViewCount.setTextColor(Color.RED)
-                else -> binding.textViewCount.setTextColor(Color.BLACK)
+//      viewModel.count.observe(this){
+        lifecycleScope.launch { //쓰레드 돌리는 파트, 
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){ //live data의 observe 역할, 관측한다. 변화 생기면 스테이트 플로우에 알려서 반영
+            viewModel.count.collect{
+                count -> binding.textViewCount.text = count.toString()
+                when{
+                    count > 0 -> binding.textViewCount.setTextColor(Color.GREEN)
+                    count < 0 -> binding.textViewCount.setTextColor(Color.RED)
+                    else -> binding.textViewCount.setTextColor(Color.BLACK)
+                }
             }
+        }
+//            count -> binding.textViewCount.text = count.toString()
         }
     }
 
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        outState.putInt("count", count)
-//    }
+
 
     private fun setupListeners() {
         binding.buttonPlus.setOnClickListener{
-//            count++
-//            updateCountDisplay()
+
             viewModel.increment() // viewmodel에서 제어함
         }
         binding.buttonMinus.setOnClickListener{
-//            count--
-//            updateCountDisplay()
+
             viewModel.decrement()
         }
         binding.buttonReset.setOnClickListener{
-//            count = 0;
-//            updateCountDisplay()
+
             viewModel.reset()
         }
         binding.buttonPlus10.setOnClickListener{
-//            count += 10;
-//            updateCountDisplay()
+
             viewModel.incrementBy10()
         }
     }
-
-//    private fun updateCountDisplay(){
-//        binding.textViewCount.text = count.toString()
-//
-//        when{
-//            count > 0 -> binding.textViewCount.setTextColor(Color.GREEN)
-//            count < 0 -> binding.textViewCount.setTextColor(Color.RED)
-//            else -> binding.textViewCount.setTextColor(Color.BLACK)
-//        }
-//    }
+    
 }
